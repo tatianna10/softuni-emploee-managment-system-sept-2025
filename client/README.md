@@ -20,5 +20,7 @@ If you are developing a production application, we recommend using TypeScript wi
 - [x] Add SoftUni practice server
 - [x] Add client resources
 - [x] Add base layout components
+- [x] Extract user item component
 
 ### Application build
+- [x] Fetch users from service
