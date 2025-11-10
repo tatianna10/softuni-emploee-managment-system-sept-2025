@@ -23,5 +23,15 @@ If you are developing a production application, we recommend using TypeScript wi
 - [x] Extract user item component
 
 ### Application build
+---
+## Show dynamic users
 - [x] Fetch users from service
 - [x] Show dynamic users
+- [x] Convert iso date to formatted date
+---
+## Create user
+- [x] Show create user modal
+
+----
+## Information details
+
