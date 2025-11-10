@@ -31,6 +31,7 @@ If you are developing a production application, we recommend using TypeScript wi
 ---
 ## Create user
 - [x] Show create user modal
+- [x] Close create user modal
 
 ----
 ## Information details
