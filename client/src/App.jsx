@@ -11,6 +11,7 @@ import { useEffect } from "react";
 function App() {
 
   const [users, setUsers] = useState([]);
+  const [forceRefresh, setForceRefresh] = useState(true);
 
   useEffect(() => {
     fetch('http://localhost:3030/jsonstore/users')
@@ -19,7 +20,7 @@ function App() {
         setUsers(Object.values(result));
       })
       .catch((err) => alert(err.message));
-  }, []);
+  }, [forceRefresh]);
 
 
   const [showCreateUser, setShowCreateUser] = useState(false);
@@ -60,12 +61,8 @@ function App() {
       },
       body: JSON.stringify(userData)
     })
-      .then(response => response.json())
-      .then(result => {
-        console.log(result);
-
-      });
-
+      .then(() => setForceRefresh(state => !state))
+      .catch(err => alert(err.message));
   };
 
   return (
