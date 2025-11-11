@@ -8,13 +8,12 @@ export default function UserItem({
     phoneNumber,
     createdAt,
     imageUrl,
+    onDetailsClick,
 }) {
     return (
         <tr>
             <td>
-                <img src={imageUrl}
-                    alt={`${firstName}'s profile`} className="image" />
-
+                <img src={imageUrl} alt={`${firstName}'s profile`} className="image" />
             </td>
             <td>{firstName}</td>
             <td>{lastName}</td>
@@ -40,7 +39,7 @@ export default function UserItem({
                         </path>
                     </svg>
                 </button>
-                <button className="btn info-btn" title="Info">
+                <button className="btn info-btn" title="Info" onClick={() => onDetailsClick(_id)}>
                     <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="info"
                         className="svg-inline--fa fa-info" role="img" xmlns="http://www.w3.org/2000/svg"
                         viewBox="-150 0 512 612">

@@ -39,4 +39,7 @@ If you are developing a production application, we recommend using TypeScript wi
 
 ----
 ## Information details
+- [x] Add actions
+  - [x] Show static user details modal
+  - [x] Close user details modal
 
