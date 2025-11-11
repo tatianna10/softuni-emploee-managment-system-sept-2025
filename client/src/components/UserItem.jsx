@@ -14,6 +14,7 @@ export default function UserItem({
             <td>
                 <img src={imageUrl}
                     alt={`${firstName}'s profile`} className="image" />
+    
             </td>
             <td>{firstName}</td>
             <td>{lastName}</td>

@@ -21,8 +21,33 @@ function App() {
   const addUserSubmitHandler = (event) => {
     event.preventDefault();
     const formData = new FormData(event.target);
-    const userData = Object.fromEntries(formData);
-    console.log(userData);
+    const { country, city, street, streetNumber, ...userData } = Object.fromEntries(formData);
+    userData.address = {
+      country,
+      city,
+      street,
+      streetNumber,
+    };
+
+    userData.createdAt = new Date().toISOString();
+    userData.updatedAt = new Date().toISOString();
+
+    //TODO Fix address
+
+    //TODO Fix createdAt and updatedAt
+
+    fetch('http://localhost:3030/jsonstore/users', {
+      method: 'Post',
+      headers: {
+        'content-type': 'application/json',
+      },
+      body: JSON.stringify(userData)
+    })
+      .then(response => response.json())
+      .then(result => {
+        console.log(result);
+
+      });
 
   };
 

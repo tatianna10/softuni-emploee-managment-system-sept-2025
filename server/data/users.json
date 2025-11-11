@@ -46,5 +46,37 @@
       "street": "456 Elm St",
       "streetNumber": "7"
     }
+  },
+  "b98ec077-6187-4881-abc2-74375a2e60a9": {
+    "_id": "b98ec077-6187-4881-abc2-74375a2e60a9",
+    "firstName": "Sonia",
+    "lastName": "Amuroso",
+    "email": "tikitak@abv.bg",
+    "phoneNumber": "77777",
+    "createdAt": "2025-07-01T07:11:00.358Z",
+    "updatedAt": "2025-07-01T07:11:00.358Z",
+    "imageUrl": "",
+    "address": {
+      "country": "Bulgaria",
+      "city": "София",
+      "street": "ул.Тодор Каблешков",
+      "streetNumber": "12"
+    },
+    "258e2876-4c88-4007-8b40-183775aef089": {
+      "firstName": "Jeff",
+      "lastName": "Besos",
+      "email": "tikitak84@gmail.com",
+      "phoneNumber": "77777",
+      "imageUrl": "https://png.pngtree.com/png-clipart/20240211/original/pngtree-portrait-of-a-person-png-image_14289687.png",
+      "address": {
+        "country": "Bulgaria",
+        "city": "София",
+        "street": "малинова долина",
+        "streetNumber": "77"
+      },
+      "createdAt": "2025-11-11T15:19:18.156Z",
+      "updatedAt": "2025-11-11T15:19:18.156Z",
+      "_id": "258e2876-4c88-4007-8b40-183775aef089"
+    }
   }
 }
