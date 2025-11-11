@@ -33,6 +33,7 @@ If you are developing a production application, we recommend using TypeScript wi
 - [x] Show create user modal
 - [x] Close create user modal
 - [x] Get user data from create user form
+- [x] Fix userData format
 
 ----
 ## Information details

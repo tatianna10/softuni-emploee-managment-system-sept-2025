@@ -5,9 +5,23 @@ import Pagination from "./components/Pagination.jsx";
 import Search from "./components/Search.jsx";
 import UserList from "./components/UserList.jsx";
 import CreateUserModal from "./components/CreateUserModal.jsx";
+import { useEffect } from "react";
 
 
 function App() {
+
+  const [users, setUsers] = useState([]);
+
+  useEffect(() => {
+    fetch('http://localhost:3030/jsonstore/users')
+      .then(response => response.json())
+      .then(result => {
+        setUsers(Object.values(result));
+      })
+      .catch((err) => alert(err.message));
+  }, []);
+
+
   const [showCreateUser, setShowCreateUser] = useState(false);
 
   const addUserClickHandler = () => {
@@ -19,8 +33,11 @@ function App() {
   };
 
   const addUserSubmitHandler = (event) => {
+    //Stop page resfresh(stop from submit)
     event.preventDefault();
+    //Get form data
     const formData = new FormData(event.target);
+    //Transform fromData to userData
     const { country, city, street, streetNumber, ...userData } = Object.fromEntries(formData);
     userData.address = {
       country,
@@ -35,7 +52,7 @@ function App() {
     //TODO Fix address
 
     //TODO Fix createdAt and updatedAt
-
+    //Create new user request
     fetch('http://localhost:3030/jsonstore/users', {
       method: 'Post',
       headers: {
@@ -59,7 +76,7 @@ function App() {
         <section className="card users-container">
           <Search />
 
-          <UserList />
+          <UserList users={users} />
 
           <button className="btn-add btn" onClick={addUserClickHandler}>Add new user</button>
 
