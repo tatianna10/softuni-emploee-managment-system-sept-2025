@@ -43,14 +43,12 @@ If you are developing a production application, we recommend using TypeScript wi
   - [x] Show static user details modal
   - [x] Close user details modal
   - [x] Show dynamic user details data
-<<<<<<< HEAD
 - [x] Add actions for delete user
   - [x] Delete user
   - [x] Refresh users after delete
   - [x] Close delete modal
 - [x] Add actions for edit user
   - [x] Edit user
+- [x] Sort users by created dates
 
-=======
->>>>>>> parent of 1d61d1f (Edit user)
 
