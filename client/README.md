@@ -42,4 +42,5 @@ If you are developing a production application, we recommend using TypeScript wi
 - [x] Add actions
   - [x] Show static user details modal
   - [x] Close user details modal
+  - [x] Show dynamic user details data
 

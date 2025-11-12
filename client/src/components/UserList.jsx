@@ -1,13 +1,16 @@
 import { useState } from "react";
 import UserDetails from "./UserDetails.jsx";
 import UserItem from "./UserItem.jsx";
+import UserDeleteModal from "./UserDeleteModal.jsx";
 
 
 export default function UserList({
     users,
+    forceUserRefresh,
 }) {
 
     const [showUserDetails, setShowUserDetails] = useState(false);
+    const [showUserDelete, setShowUserDelete] = useState(false);
     const [selectedUserId, setSelectedUserId] = useState(null);
 
     const detailsActionClickHandler = (userId) => {
@@ -16,8 +19,16 @@ export default function UserList({
 
     };
 
-    const closeModalHadler = () =>
-        setShowUserDetails(false);
+    const deleteActionClickHandler = (userId) => {
+        setSelectedUserId(userId);
+        setShowUserDelete(true);
+    };
+
+    const closeModalHadler = () => {
+        setShowUserDetails(false); //common hadler to close all modals
+        setShowUserDelete(false);
+        setSelectedUserId(null);
+    };
 
     return (
         <div className="table-wrapper">
@@ -82,6 +93,7 @@ export default function UserList({
                             {...user}
                             key={user._id}
                             onDetailsClick={detailsActionClickHandler}
+                            onDeleteClick={deleteActionClickHandler}
                         />
                     )}
                 </tbody>
@@ -93,6 +105,13 @@ export default function UserList({
                     onClose={closeModalHadler}
                 />}
 
+            {showUserDelete && (
+                <UserDeleteModal
+                    userId={selectedUserId}
+                    onClose={closeModalHadler}
+                    forceUserRefresh={forceUserRefresh}
+                />
+            )}
         </div>
     );
 }

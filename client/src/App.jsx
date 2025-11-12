@@ -11,7 +11,7 @@ import { useEffect } from "react";
 function App() {
 
   const [users, setUsers] = useState([]);
-  const [forceRefresh, setForceRefresh] = useState(true);
+  const [refresh, setRefresh] = useState(true);
 
   useEffect(() => {
     fetch('http://localhost:3030/jsonstore/users')
@@ -20,8 +20,11 @@ function App() {
         setUsers(Object.values(result));
       })
       .catch((err) => alert(err.message));
-  }, [forceRefresh]);
+  }, [refresh]);
 
+  const forceRefresh = () => {
+    setRefresh(state => !state);
+  };
 
   const [showCreateUser, setShowCreateUser] = useState(false);
 
@@ -62,7 +65,7 @@ function App() {
       body: JSON.stringify(userData)
     })
       .then(() => {
-        setForceRefresh(state => !state);
+        forceRefresh();
         closeUserModalHandler();
       })
       .catch(err => alert(err.message));
@@ -77,7 +80,7 @@ function App() {
         <section className="card users-container">
           <Search />
 
-          <UserList users={users} />
+          <UserList users={users} forceUserRefresh={forceRefresh}/>
 
           <button className="btn-add btn" onClick={addUserClickHandler}>Add new user</button>
 
