@@ -43,4 +43,7 @@ If you are developing a production application, we recommend using TypeScript wi
   - [x] Show static user details modal
   - [x] Close user details modal
   - [x] Show dynamic user details data
+  - [x] Delete user
+  - [x] Refresh users after delete
+  - [x] Close delete modal
 
