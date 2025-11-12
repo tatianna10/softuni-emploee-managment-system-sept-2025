@@ -2,17 +2,16 @@ import { useState } from "react";
 import UserDetails from "./UserDetails.jsx";
 import UserItem from "./UserItem.jsx";
 import UserDeleteModal from "./UserDeleteModal.jsx";
-import UserSaveModal from "./UserSaveModal.jsx";
 
 
 export default function UserList({
     users,
     forceUserRefresh,
+    onSort,
 }) {
 
     const [showUserDetails, setShowUserDetails] = useState(false);
     const [showUserDelete, setShowUserDelete] = useState(false);
-    const [showUserEdit, setShowUserEdit] = useState(false);
     const [selectedUserId, setSelectedUserId] = useState(null);
 
     const detailsActionClickHandler = (userId) => {
@@ -26,47 +25,13 @@ export default function UserList({
         setShowUserDelete(true);
     };
 
-    const editActionClickHandler = (userId) => {
-        setSelectedUserId(userId);
-        setShowUserEdit(true);
-
-    };
-
-    const closeModalHandler = () => {
+    const closeModalHadler = () => {
         setShowUserDetails(false); //common hadler to close all modals
         setShowUserDelete(false);
-        setShowUserEdit(false);
         setSelectedUserId(null);
-        forceUserRefresh();
     };
 
-    const editUserHandler = async (event) => {
-        event.preventDefault();
-        const formData = new FormData(event.target);
-        const { country, city, street, streetNumber, ...userData } = Object.fromEntries(formData);
-        userData.address = {
-            country,
-            city,
-            street,
-            streetNumber
-        };
-
-        userData.updatedAt = new Date().toISOString();
-
-        try {
-            await fetch(`http://localhost:3030/jsonstore/users/${selectedUserId}`, {
-                method: 'PATCH',
-                headers: {
-                    'content-type': 'application/json',
-                },
-                body: JSON.stringify(userData),
-            });
-
-            closeModalHandler();
-        } catch (error) {
-            alert(error.message);
-        }
-    };
+    const [sortAsc, setSortAsc] = useState(true);
 
     return (
         <div className="table-wrapper">
@@ -112,11 +77,29 @@ export default function UserList({
                                 </path>
                             </svg>
                         </th>
-                        <th>
+                        <th onClick={() => {
+                            onSort(sortAsc);
+                            setSortAsc(prev => !prev);
+                        }}>
                             Created
-                            <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="arrow-down"
+                            {/* <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="arrow-down"
                                 className="icon active-icon svg-inline--fa fa-arrow-down Table_icon__+HHgn" role="img"
-                                xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512">
+                                xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"> */}
+                            <svg
+                                aria-hidden="true"
+                                focusable="false"
+                                data-prefix="fas"
+                                data-icon="arrow-down"
+                                className={`icon active-icon svg-inline--fa fa-arrow-down Table_icon__+HHgn ${sortAsc ? "rotate-180" : ""
+                                    }`}
+                                role="img"
+                                xmlns="http://www.w3.org/2000/svg"
+                                viewBox="0 0 384 512"
+                                style={{
+                                    transform: sortAsc ? "rotate(180deg)" : "rotate(0deg)",
+                                    transition: "transform 0.2s ease",
+                                }}
+                            >
                                 <path fill="currentColor"
                                     d="M374.6 310.6l-160 160C208.4 476.9 200.2 480 192 480s-16.38-3.125-22.62-9.375l-160-160c-12.5-12.5-12.5-32.75 0-45.25s32.75-12.5 45.25 0L160 370.8V64c0-17.69 14.33-31.1 31.1-31.1S224 46.31 224 64v306.8l105.4-105.4c12.5-12.5 32.75-12.5 45.25 0S387.1 298.1 374.6 310.6z">
                                 </path>
@@ -126,38 +109,28 @@ export default function UserList({
                     </tr>
                 </thead>
                 <tbody>
-                    {users.map(user => (
+                    {users.map(user =>
                         <UserItem
                             {...user}
                             key={user._id}
                             onDetailsClick={detailsActionClickHandler}
                             onDeleteClick={deleteActionClickHandler}
-                            onEditClick={editActionClickHandler}
                         />
-                    ))}
+                    )}
                 </tbody>
             </table>
 
-            {showUserDetails && (
+            {showUserDetails &&
                 <UserDetails
                     userId={selectedUserId}
-                    onClose={closeModalHandler}
-                />
-            )}
+                    onClose={closeModalHadler}
+                />}
 
             {showUserDelete && (
                 <UserDeleteModal
                     userId={selectedUserId}
-                    onClose={closeModalHandler}
-                />
-            )}
-
-            {showUserEdit && (
-                <UserSaveModal
-                    userId={selectedUserId}
-                    onClose={closeModalHandler}
-                    onSubmit={editUserHandler}
-                    editMode
+                    onClose={closeModalHadler}
+                    forceUserRefresh={forceUserRefresh}
                 />
             )}
         </div>

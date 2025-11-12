@@ -1,35 +1,14 @@
-import { useEffect, useState } from "react";
-import Spinner from "./Spinner.jsx";
-
-export default function UserSaveModal({
-    editMode,
-    userId,
+export default function CreateUserModal({
     onClose,
     onSubmit,
 }) {
-
-    const [user, setUser] = useState(null);
-
-    useEffect(() => {
-        if (editMode) {
-            fetch(`http://localhost:3030/jsonstore/users/${userId}`)
-                .then(response => response.json())
-                .then(result => setUser(result))
-                .catch(err => alert(err.message));
-        }
-    }, [editMode, userId]);
-
-    if (editMode && !user) {
-        return <Spinner />;
-    }
-
     return (
         <div className="overlay">
             <div className="backdrop" onClick={onClose}></div>
             <div className="modal">
                 <div className="user-container">
                     <header className="headers">
-                        <h2>{editMode ? 'Edit' : 'Add'} User</h2>
+                        <h2>Add User</h2>
                         <button className="btn close" onClick={onClose}>
                             <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="xmark"
                                 className="svg-inline--fa fa-xmark" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512">
@@ -39,20 +18,20 @@ export default function UserSaveModal({
                             </svg>
                         </button>
                     </header>
-                    <form onSubmit={(event) => onSubmit(event, userId)}>
+                    <form onSubmit={onSubmit}> 
                         <div className="form-row">
                             <div className="form-group">
                                 <label htmlFor="firstName">First name</label>
                                 <div className="input-wrapper">
                                     <span><i className="fa-solid fa-user"></i></span>
-                                    <input id="firstName" name="firstName" type="text" defaultValue={user?.firstName} />
+                                    <input id="firstName" name="firstName" type="text" />
                                 </div>
                             </div>
                             <div className="form-group">
                                 <label htmlFor="lastName">Last name</label>
                                 <div className="input-wrapper">
                                     <span><i className="fa-solid fa-user"></i></span>
-                                    <input id="lastName" name="lastName" type="text" defaultValue={user?.lastName} />
+                                    <input id="lastName" name="lastName" type="text" />
                                 </div>
                             </div>
                         </div>
@@ -62,14 +41,14 @@ export default function UserSaveModal({
                                 <label htmlFor="email">Email</label>
                                 <div className="input-wrapper">
                                     <span><i className="fa-solid fa-envelope"></i></span>
-                                    <input id="email" name="email" type="text" defaultValue={user?.email} />
+                                    <input id="email" name="email" type="text" />
                                 </div>
                             </div>
                             <div className="form-group">
                                 <label htmlFor="phoneNumber">Phone number</label>
                                 <div className="input-wrapper">
                                     <span><i className="fa-solid fa-phone"></i></span>
-                                    <input id="phoneNumber" name="phoneNumber" type="text" defaultValue={user?.phoneNumber} />
+                                    <input id="phoneNumber" name="phoneNumber" type="text" />
                                 </div>
                             </div>
                         </div>
@@ -78,7 +57,7 @@ export default function UserSaveModal({
                             <label htmlFor="imageUrl">Image Url</label>
                             <div className="input-wrapper">
                                 <span><i className="fa-solid fa-image"></i></span>
-                                <input id="imageUrl" name="imageUrl" type="text" defaultValue={user?.imageUrl} />
+                                <input id="imageUrl" name="imageUrl" type="text" />
                             </div>
                         </div>
 
@@ -87,14 +66,14 @@ export default function UserSaveModal({
                                 <label htmlFor="country">Country</label>
                                 <div className="input-wrapper">
                                     <span><i className="fa-solid fa-map"></i></span>
-                                    <input id="country" name="country" type="text" defaultValue={user?.address?.country} />
+                                    <input id="country" name="country" type="text" />
                                 </div>
                             </div>
                             <div className="form-group">
                                 <label htmlFor="city">City</label>
                                 <div className="input-wrapper">
                                     <span><i className="fa-solid fa-city"></i></span>
-                                    <input id="city" name="city" type="text" defaultValue={user?.address?.city} />
+                                    <input id="city" name="city" type="text" />
                                 </div>
                             </div>
                         </div>
@@ -104,19 +83,19 @@ export default function UserSaveModal({
                                 <label htmlFor="street">Street</label>
                                 <div className="input-wrapper">
                                     <span><i className="fa-solid fa-map"></i></span>
-                                    <input id="street" name="street" type="text" defaultValue={user?.address?.street} />
+                                    <input id="street" name="street" type="text" />
                                 </div>
                             </div>
                             <div className="form-group">
                                 <label htmlFor="streetNumber">Street number</label>
                                 <div className="input-wrapper">
                                     <span><i className="fa-solid fa-house-chimney"></i></span>
-                                    <input id="streetNumber" name="streetNumber" type="text" defaultValue={user?.address?.streetNumber} />
+                                    <input id="streetNumber" name="streetNumber" type="text" />
                                 </div>
                             </div>
                         </div>
                         <div id="form-actions">
-                            <button id="action-save" className="btn" type="submit">{editMode ? 'Edit' : 'Create'}</button>
+                            <button id="action-save" className="btn" type="submit">Save</button>
                             <button id="action-cancel" className="btn" type="button" onClick={onClose}>
                                 Cancel
                             </button>

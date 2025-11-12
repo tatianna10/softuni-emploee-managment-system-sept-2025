@@ -4,7 +4,7 @@ import Header from "./components/Header.jsx";
 import Pagination from "./components/Pagination.jsx";
 import Search from "./components/Search.jsx";
 import UserList from "./components/UserList.jsx";
-import UserSaveModal from "./components/UserSaveModal.jsx";
+import CreateUserModal from "./components/CreateUserModal.jsx";
 import { useEffect } from "react";
 
 
@@ -22,7 +22,7 @@ function App() {
       .catch((err) => alert(err.message));
   }, [refresh]);
 
-  const forceUserRefresh = () => {
+  const forceRefresh = () => {
     setRefresh(state => !state);
   };
 
@@ -36,6 +36,25 @@ function App() {
     setShowCreateUser(false);
   };
 
+  // const sortUsersHandler = () => {
+  //   setUsers(state => [...state].sort((userA, userB) => new Date(userB.createdAt) - new Date(userA.createdAt)));
+  // };
+
+  const [sortAsc, setSortAsc] = useState(true);
+
+const sortUsersHandler = () => {
+  setUsers(state =>
+    [...state].sort((a, b) =>
+      sortAsc
+        ? new Date(a.createdAt) - new Date(b.createdAt) // ascending (oldest → newest)
+        : new Date(b.createdAt) - new Date(a.createdAt) // descending (newest → oldest)
+    )
+  );
+
+  setSortAsc(prev => !prev); // toggle each time you click
+};
+
+  
   const addUserSubmitHandler = (event) => {
     //Stop page resfresh(stop from submit)
     event.preventDefault();
@@ -65,7 +84,7 @@ function App() {
       body: JSON.stringify(userData)
     })
       .then(() => {
-        forceUserRefresh();
+        forceRefresh();
         closeUserModalHandler();
       })
       .catch(err => alert(err.message));
@@ -80,7 +99,7 @@ function App() {
         <section className="card users-container">
           <Search />
 
-          <UserList users={users} forceUserRefresh={forceUserRefresh}/>
+          <UserList users={users} forceUserRefresh={forceRefresh} onSort={sortUsersHandler} />
 
           <button className="btn-add btn" onClick={addUserClickHandler}>Add new user</button>
 
@@ -89,7 +108,7 @@ function App() {
         </section>
 
         {showCreateUser
-          && <UserSaveModal
+          && <CreateUserModal
             onClose={closeUserModalHandler}
             onSubmit={addUserSubmitHandler}
           />}

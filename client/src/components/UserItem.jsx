@@ -10,7 +10,6 @@ export default function UserItem({
     imageUrl,
     onDetailsClick,
     onDeleteClick,
-    onEditClick,
 }) {
     return (
         <tr>
@@ -24,7 +23,7 @@ export default function UserItem({
             <td>{fromIsoDate(createdAt)}</td>
 
             <td className="actions">
-                <button className="btn edit-btn" title="Edit" onClick={() => onEditClick(_id)}>
+                <button className="btn edit-btn" title="Edit">
                     <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="pen-to-square"
                         className="svg-inline--fa fa-pen-to-square" role="img" xmlns="http://www.w3.org/2000/svg"
                         viewBox="0 0 532 512">
